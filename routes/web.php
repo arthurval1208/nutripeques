@@ -21,7 +21,9 @@ Route::post('/logout', [AdmisController::class, 'logout'])->name('logout');
 Route::get('/perfil', function () {
     return view('perfil');
 })->name('perfil');
-
+Route::get('/plan/{edad}', function ($edad) {
+    return view('plan', compact('edad'));
+});
 
 // Protegidas
 Route::middleware(['checkAdmin'])->group(function () {
