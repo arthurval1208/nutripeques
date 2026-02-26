@@ -3,10 +3,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Servicios Nutricionales - Nutripeques</title>
+    <title>Planes Nutricionales - Nutripeques</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
         :root { --purple-gradient: linear-gradient(135deg, #7276d1 0%, #5a5eb1 100%); --soft-blue: #f3f3f8; }
         body { font-family: 'Quicksand', sans-serif; background-color: var(--soft-blue); }
@@ -17,10 +18,19 @@
         .table { border-collapse: separate; border-spacing: 0 10px; }
         .table tbody tr { background: white; border-radius: 15px; box-shadow: 0 5px 10px rgba(0,0,0,0.02); }
         .table tbody td { border: none; padding: 20px; vertical-align: middle; }
-        .btn-action { width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; border-radius: 12px; text-decoration: none; transition: 0.3s; }
-        .btn-edit { background-color: #fff3e0; color: #ff9800; }
-        .btn-delete { background-color: #ffebee; color: #f44336; }
-        .price-badge { background: #e8f5e9; color: #2e7d32; padding: 8px 15px; border-radius: 20px; font-weight: 700; }
+        .btn-view {
+            background: var(--purple-gradient);
+            color: white;
+            border-radius: 20px;
+            padding: 8px 20px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .btn-view:hover {
+            opacity: 0.9;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -35,51 +45,86 @@
 
 <div class="container py-5">
     <div class="glass-container">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <div class="d-flex align-items-center">
-                <a href="{{ url('/home') }}" class="btn-back-link me-3"><i class="bi bi-arrow-left-circle-fill"></i></a>
-                <div>
-                    <h2 class="fw-bold mb-0">Catálogo de Servicios</h2>
-                    <p class="text-muted mb-0">Planes y programas nutricionales</p>
-                </div>
-            </div>
-            <a href="{{ url('/crear-servicio') }}" class="btn btn-primary rounded-pill px-4" style="background: var(--purple-gradient); border:none;">
-                <i class="bi bi-plus-lg me-2"></i> Nuevo Servicio
+        <div class="d-flex align-items-center mb-4">
+            <a href="{{ url('/home') }}" class="btn-back-link me-3">
+                <i class="bi bi-arrow-left-circle-fill"></i>
             </a>
+            <div>
+                <h2 class="fw-bold mb-0">Planes Nutricionales</h2>
+                <p class="text-muted mb-0">Programas recomendados por rango de edad</p>
+            </div>
         </div>
 
         <div class="table-responsive">
             <table class="table">
                 <thead>
                     <tr class="text-muted small">
-                        <th>SERVICIO</th>
+                        <th>RANGO DE EDAD</th>
+                        <th>PLAN NUTRICIONAL</th>
                         <th>DESCRIPCIÓN</th>
-                        <th>PRECIO</th>
-                        <th class="text-center">ACCIONES</th>
+                        <th class="text-center">VER</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($servicios as $s)
+
                     <tr>
-                        <td><strong>{{ $s['nombre'] }}</strong></td>
-                        <td class="text-muted">{{ Str::limit($s['desc'], 50) }}</td>
-                        <td><span class="price-badge">${{ $s['precio'] }}</span></td>
+                        <td><strong>5 - 8 años</strong></td>
+                        <td>Plan Infantil Inicial</td>
+                        <td class="text-muted">
+                            Programa enfocado en hábitos saludables y crecimiento adecuado.
+                        </td>
                         <td class="text-center">
-                            <a href="{{ url('/editar-firebase/servicios/'.$s['id']) }}" class="btn-action btn-edit me-1" title="Editar">
-                                <i class="bi bi-pencil-square"></i>
+                            <a href="{{ url('/plan/5-8') }}" class="btn-view">
+                                Ver Plan
                             </a>
-                            <form action="{{ url('/eliminar-firebase/servicios/'.$s['id']) }}" method="POST" class="d-inline" onsubmit="return confirm('¿Eliminar servicio?')">
-                                @csrf @method('DELETE')
-                                <button type="submit" class="btn-action btn-delete"><i class="bi bi-trash3-fill"></i></button>
-                            </form>
                         </td>
                     </tr>
-                    @endforeach
+
+                    <tr>
+                        <td><strong>9 - 11 años</strong></td>
+                        <td>Plan Escolar Activo</td>
+                        <td class="text-muted">
+                            Optimización de energía y concentración durante etapa escolar.
+                        </td>
+                        <td class="text-center">
+                            <a href="{{ url('/plan/9-11') }}" class="btn-view">
+                                Ver Plan
+                            </a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>12 - 15 años</strong></td>
+                        <td>Plan Adolescente en Desarrollo</td>
+                        <td class="text-muted">
+                            Soporte nutricional en etapa de crecimiento acelerado.
+                        </td>
+                        <td class="text-center">
+                            <a href="{{ url('/plan/12-15') }}" class="btn-view">
+                                Ver Plan
+                            </a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>15 - 18 años</strong></td>
+                        <td>Plan Juvenil Integral</td>
+                        <td class="text-muted">
+                            Nutrición estratégica para rendimiento académico y deportivo.
+                        </td>
+                        <td class="text-center">
+                            <a href="{{ url('/plan/15-18') }}" class="btn-view">
+                                Ver Plan
+                            </a>
+                        </td>
+                    </tr>
+
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
